@@ -1,0 +1,16 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/SRVModTool/bin/Debug/netstandard2.0
+/SRVModTool/obj
+/SRVModTool.App.Manager/bin/x64/Debug
+/SRVModTool.App.Manager/obj
+/SRVModTool.App.Publisher/bin/x64/Debug
+/SRVModTool.App.Publisher/obj
+/SRVModTool.App.WpfControls/bin/Debug
+/SRVModTool.App.WpfControls/obj
+/SRVModTool.Test/bin/Debug/net5.0
+/SRVModTool.Test/obj
+/SRVModTool.App.Manager/PostBuild.ps1
