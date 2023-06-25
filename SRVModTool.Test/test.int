@@ -1,0 +1,7 @@
+[Test]
+Test=Enemy
+Test2=Ally
+
+[RPGTacCampaignLoader]
+CampaignList[0]=(CampaignName="Test Campaign",CampaignPrefix="TEST1",CampaignDescription="TEST DESC",CampaignBaseLevel="TEST1_Base",CampaignGameType="TEST1.TEST1")
+CampaignList[1]=(CampaignName="Test Voyager",CampaignPrefix="TEST2",CampaignDescription="TEST DESC2",CampaignBaseLevel="TEST2_Base",CampaignGameType="TEST2.TEST2")

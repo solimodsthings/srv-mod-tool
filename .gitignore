@@ -1,16 +1,21 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
-
-/.vs
+﻿/.vs
+/SRVModTool/bin
 /SRVModTool/bin/Debug/netstandard2.0
 /SRVModTool/obj
+/SRVModTool.App.Manager/bin
 /SRVModTool.App.Manager/bin/x64/Debug
 /SRVModTool.App.Manager/obj
+/SRVModTool.App.Publisher/bin
 /SRVModTool.App.Publisher/bin/x64/Debug
 /SRVModTool.App.Publisher/obj
+/SRVModTool.App.WpfControls/bin
 /SRVModTool.App.WpfControls/bin/Debug
 /SRVModTool.App.WpfControls/obj
+/SRVModTool.Test/bin
 /SRVModTool.Test/bin/Debug/net5.0
 /SRVModTool.Test/obj
 /SRVModTool.App.Manager/PostBuild.ps1
+/SRVModTool.App.Publisher/PostBuild.ps1
+/SRVModTool.App.Publisher/Steamworks.NET.dll
+/SRVModTool.App.Publisher/steam_api64.dll
+/SRVModTool.App.Publisher/steam_appid.txt
