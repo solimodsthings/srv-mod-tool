@@ -11,12 +11,14 @@
         WindowStyle="None"
         ResizeMode="NoResize"
         ShowInTaskbar="False"
+        Background="#1E1E1E"
         Title="MessageWindow" Height="Auto" Width="400" SizeToContent="Height"
         WindowStartupLocation="CenterOwner">
 
     <Window.Resources>
         <Style x:Key="InfoLabelHeaderStyle" TargetType="Label">
             <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="White"/>
         </Style>
         <Style x:Key="InfoLabelValueStyle" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Normal"/>
@@ -27,16 +29,20 @@
     </Window.Resources>
 
     <Grid Margin="8">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="95*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Label x:Name="LabelMessageHeader" Grid.Row="0" VerticalAlignment="Bottom" Margin="4" Padding="4" Style="{StaticResource InfoLabelHeaderStyle}"/>
-        <TextBlock x:Name="TextBoxMessageBody" Grid.Row="1" VerticalAlignment="Bottom" Margin="4" Padding="4" TextWrapping="WrapWithOverflow" Style="{StaticResource InfoLabelValueStyle}"/>
+        <Label x:Name="LabelMessageHeader" VerticalAlignment="Center" Margin="0,0,4,0" Padding="4" Style="{StaticResource InfoLabelHeaderStyle}" Grid.Column="1"/>
+        <TextBlock x:Name="TextBoxMessageBody" Grid.Row="1" VerticalAlignment="Center" Margin="0,0,4,0" Padding="4" TextWrapping="WrapWithOverflow" Style="{StaticResource InfoLabelValueStyle}" Grid.Column="1"/>
 
-        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right">
+        <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" Grid.Column="1" Margin="343,0,0,0">
             <Button x:Name="ButtonOk" Margin="4" Padding="4" Click="OnOkButtonClicked">OK</Button>
             <Button x:Name="ButtonCancel" Margin="4" Padding="4" Click="OnCancelButtonClicked" Visibility="Collapsed">Cancel</Button>
         </StackPanel>

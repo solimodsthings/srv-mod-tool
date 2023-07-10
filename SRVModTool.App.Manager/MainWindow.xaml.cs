@@ -69,7 +69,7 @@ namespace SRVModTool.App.Manager
             this.TakeModConfigurationSnapshot();
 
             this.SelectedMod = new ModViewModel(new ModConfiguration());
-            this.ModInfoPanel.DataContext = this.SelectedMod;
+            // this.ModInfoPanel.DataContext = this.SelectedMod;
             this.ModStatePanel.DataContext = this.SelectedMod;
 
             if(this.Manager.ModConfigurations.Count > 0)
@@ -83,16 +83,23 @@ namespace SRVModTool.App.Manager
             var style = new Style();
                         
             style.TargetType = typeof(ListViewItem);
-            style.Setters.Add(new Setter(ListViewItem.ForegroundProperty, Brushes.Gray));
+            style.Setters.Add(new Setter(ListViewItem.ForegroundProperty, new SolidColorBrush(Color.FromArgb((byte)255, (byte)150, (byte)150, (byte)150))));
+
 
             var trigger = new DataTrigger();
             trigger.Binding = new Binding("State");
             trigger.Value = "Enabled";
-            trigger.Setters.Add(new Setter(ListViewItem.ForegroundProperty, Brushes.Black));
+            trigger.Setters.Add(new Setter(ListViewItem.ForegroundProperty, Brushes.White));
             style.Triggers.Add(trigger);
 
             this.ExtendItemContainerStyle(style);
 
+            var listStyle = new Style();
+            listStyle.TargetType = typeof(ListView);
+            listStyle.Setters.Add(new Setter(ListView.BackgroundProperty, new SolidColorBrush(Color.FromArgb((byte)255, (byte)25, (byte)25, (byte)25))));
+
+            listStyle.BasedOn = this.ListAvailableMods.Style;
+            this.ListAvailableMods.Style = listStyle;
         }
 
         private void ExtendItemContainerStyle(Style style)
@@ -228,6 +235,7 @@ namespace SRVModTool.App.Manager
                 this.SelectedMod.Set(mod);
                 this.InfoPanel.IsEnabled = true;
 
+                /*
                 if(mod.RegistrationType == RegistrationType.SteamWorkshopItem)
                 {
                     // Future release:
@@ -246,7 +254,9 @@ namespace SRVModTool.App.Manager
                     this.ButtonRemoveMod.IsEnabled = true;
                     this.ButtonRemoveMod.ToolTip = null;
                 }
+                */
 
+                /*
                 if(this.SelectedMod.SteamWorkshopId != null)
                 {
                     this.LabelVisitSteamPage.Visibility = Visibility.Visible;
@@ -257,6 +267,7 @@ namespace SRVModTool.App.Manager
                     this.LabelVisitSteamPage.Visibility = Visibility.Collapsed;
                     this.HyperlinkVisitSteamPage.Visibility = Visibility.Collapsed;
                 }
+                */
 
             }
             else
@@ -737,6 +748,23 @@ namespace SRVModTool.App.Manager
         private void OnOpenSteamWorkshopButtonClick(object sender, RoutedEventArgs e)
         {
             Game.OpenSteamWorkshop();
+        }
+
+        private void OnUnhandledAction(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void OnSettingsButtonClick(object sender, RoutedEventArgs e)
+        {
+            var button = (Button)sender;
+            if (e.Equals(Mouse.RightButton))
+            {
+                e.Handled = true;
+                return;
+            }
+
+            this.ContextMenuAppSettings.IsOpen = true;
         }
     }
 }

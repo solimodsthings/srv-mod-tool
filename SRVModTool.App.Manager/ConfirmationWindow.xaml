@@ -17,6 +17,7 @@
     <Window.Resources>
         <Style x:Key="InfoLabelHeaderStyle" TargetType="Label">
             <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Foreground" Value="White"/>
         </Style>
         <Style x:Key="InfoLabelValueStyle" TargetType="TextBlock">
             <Setter Property="FontWeight" Value="Normal"/>
@@ -26,7 +27,7 @@
         </Style>
     </Window.Resources>
 
-    <Grid>
+    <Grid Background="#1E1E1E">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
