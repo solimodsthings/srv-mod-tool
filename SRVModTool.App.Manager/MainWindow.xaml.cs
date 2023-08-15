@@ -7,20 +7,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 using SRVModTool;
 using SRVModTool.App.WpfControls;
-using Microsoft.Win32;
 
 namespace SRVModTool.App.Manager
 {
@@ -32,11 +26,14 @@ namespace SRVModTool.App.Manager
         private static double SteamWorkshopMaximumSleepTime = 60; // in seconds
         private static int SteamWorkshopCreationSleepTime = 250;  // in milliseconds
         private static int SteamWorkshopDeletionSleepTime = 1000; // in milliseconds
+        private static string DefaultWindowTitle = "Septaroad Voyager Mod Manager 1.4";
+        private static string DefaultUnsavedChangesTitle = " (Unsaved Changes)"; // Leading space matters
 
         public ModManager Manager { get; set; }
         private FileSystemWatcher SteamWorkshopDirectoryWatcher { get; set; } // Used to check if a new mod has been subscribed to
         public ObservableCollection<ModViewModel> ModViewModels { get; set; }
         public ModViewModel SelectedMod { get; set; }
+
         private List<ModConfigurationSnapshot> ModConfigurationSnapshots { get; set; }
 
 
@@ -52,6 +49,8 @@ namespace SRVModTool.App.Manager
             {
                 this.ShowMessage("Warning", result.ErrorMessage);
             }
+
+            this.TextBlockAppTitle.Text = DefaultWindowTitle;
 
             this.SteamWorkshopDirectoryWatcher = new FileSystemWatcher();
             this.SteamWorkshopDirectoryWatcher.IncludeSubdirectories = true;
@@ -100,6 +99,20 @@ namespace SRVModTool.App.Manager
 
             listStyle.BasedOn = this.ListAvailableMods.Style;
             this.ListAvailableMods.Style = listStyle;
+
+
+        }
+
+        private void UpdateUnsavedChangesStatus()
+        {
+            if (this.HasUnappliedChanges())
+            {
+                this.TextBlockAppTitle.Text = DefaultWindowTitle + DefaultUnsavedChangesTitle;
+            }
+            else
+            {
+                this.TextBlockAppTitle.Text = DefaultWindowTitle;
+            }
         }
 
         private void ExtendItemContainerStyle(Style style)
@@ -132,6 +145,7 @@ namespace SRVModTool.App.Manager
                 var vm = new ModViewModel(mod);
                 this.ModViewModels.Add(vm);
             }
+
         }
 
         private void RefreshModList()
@@ -297,6 +311,7 @@ namespace SRVModTool.App.Manager
         private void OnControllerUsed(object sender, RoutedEventArgs e)
         {
             this.RefreshModList();
+            this.UpdateUnsavedChangesStatus();
         }
 
         private void OnMoveModOrderUp(object sender, RoutedEventArgs e)
@@ -309,6 +324,8 @@ namespace SRVModTool.App.Manager
                 this.Manager.ShiftModOrderUp(selection);
                 this.RebuildModViewModels();
                 this.ListAvailableMods.SelectedIndex = configuration.OrderIndex;
+
+                this.UpdateUnsavedChangesStatus();
             }
 
         }
@@ -323,6 +340,8 @@ namespace SRVModTool.App.Manager
                 this.Manager.ShiftModOrderDown(selection);
                 this.RebuildModViewModels();
                 this.ListAvailableMods.SelectedIndex = configuration.OrderIndex;
+
+                this.UpdateUnsavedChangesStatus();
             }
         }
 
@@ -344,7 +363,7 @@ namespace SRVModTool.App.Manager
 
         }
 
-        
+        /*
         private void OnAddNewModButtonClick(object sender, RoutedEventArgs e)
         {
             var message = new MessageWindow("Steam", "Mods are available through the Steam Workshop. Mods that you subscribe to will appear in this mod list. \n\nWould you like to open the Steam Workshop?", true);
@@ -358,7 +377,7 @@ namespace SRVModTool.App.Manager
 
             this.ShowDarkOverlay(false);
 
-            /* 
+            
             // Prior to Steam Workshop integration, this button showed a file dialog
             // to select an .hsmod file to load. Here was the code:
             
@@ -372,14 +391,16 @@ namespace SRVModTool.App.Manager
                 var result = this.Manager.RegisterMod(browse.FileName);
                 this.HandleRegistrationResult(result);
             }
-            */
+            
         }
+        */
 
         // Only for standalone mods. Steam mods should only be
         // removed by unsubscribing from them in the Steam Workshop
+        /*
         private void OnRemoveMod(object sender, RoutedEventArgs e)
         {
-            /*
+            
             var selectedIndex = this.ListAvailableMods.SelectedIndex;
 
             if(selectedIndex >= 0 && selectedIndex < this.Manager.ModConfigurations.Count)
@@ -405,9 +426,9 @@ namespace SRVModTool.App.Manager
 
                 this.ShowDarkOverlay(false);
             }
-            */
+            
 
-        }
+        }*/
 
         /*
         private void HandleRegistrationResult(Result result)
@@ -488,6 +509,7 @@ namespace SRVModTool.App.Manager
             Dispatcher.Invoke(() => {
                 this.ShowDarkOverlay(false);
                 this.ShowProgressRing(false);
+                this.UpdateUnsavedChangesStatus();
             });
         }
 
